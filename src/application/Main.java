@@ -101,7 +101,7 @@ public class Main extends Application {
 									// System.out.println("geton_Send to Raspberry On1 : " + busPlateNo);
 									str_log += (busPlateNo + " has arrived the station #"+stationSeqList.item(i).getTextContent()+"\n");
 									str_log += ("Send \"Get On\" message to the raspberry pi device." + "\n");
-									String res_msg = "geton&" + busPlateNo; 
+									String res_msg = "geton&" + busPlateNo + "&" + selStationName; 
 									client.publish("bus_responses",res_msg.getBytes(),1,false);
 									// System.out.println("Blocked");
 									goRas_geton = true;
@@ -116,7 +116,7 @@ public class Main extends Application {
 							if((Integer.parseInt(stationSeqList.item(i).getTextContent()) >= Integer.parseInt(busSeq)) && (plateNoList.item(i).getTextContent().equals(busPlateNo))) {
 								if(goRas_getend == false) {
 									System.out.println("geton_Send to Raspberry On2 : " + busPlateNo);
-									String res_msg = "geton_end&" + busPlateNo; 
+									String res_msg = "geton_end&" + busPlateNo + "&" + selStationName;
 									client.publish("bus_responses",res_msg.getBytes(),1,false);
 									waitArrived = false;
 									goRas_getend = true;
@@ -146,7 +146,7 @@ public class Main extends Application {
 									str_log += (busPlateNo + " has arrived the station #"+stationSeqList.item(i).getTextContent()+"\n");
 									str_log += ("Send \"Get On\" message to the raspberry pi device." + "\n");
 									// System.out.println("getoff_Send to Raspberry On1 : " + busPlateNo);
-									String res_msg = "getoff&" + busPlateNo; 
+									String res_msg = "getoff&" + busPlateNo + "&" + selStationName; 
 									client.publish("bus_responses",res_msg.getBytes(),1,false);
 									// System.out.println("Blocked");
 									goRas_getoff = true;
@@ -161,7 +161,7 @@ public class Main extends Application {
 							if((Integer.parseInt(stationSeqList.item(i).getTextContent()) >= Integer.parseInt(busSeq)) && (plateNoList.item(i).getTextContent().equals(busPlateNo))) {
 								if(goRas_getoffend == false) {
 									System.out.println("getoff_Send to Raspberry On2 : " + busPlateNo);
-									String res_msg = "getoff_end&" + busPlateNo; 
+									String res_msg = "getoff_end&" + busPlateNo + "&" + selStationName; 
 									client.publish("bus_responses",res_msg.getBytes(),1,false);
 									waitArrived = false;
 									goRas_getoffend = true;
