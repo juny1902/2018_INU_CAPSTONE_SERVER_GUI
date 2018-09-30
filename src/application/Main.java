@@ -24,8 +24,7 @@ import javafx.scene.control.TextField;
 
 
 public class Main extends Application {
-	
-	@FXML 
+	@FXML
 	private TextField tf_server_status;
 	@FXML
 	private TextField tf_req_bus_plate; //
@@ -41,6 +40,7 @@ public class Main extends Application {
 	private TextArea ta_running_log; // 
 	@FXML
 	private TextField tf_req_function;
+
 	
 	public void serverStart() throws MqttException {
 		MqttClient client = new MqttClient("tcp://iot.eclipse.org:1883", MqttClient.generateClientId());
@@ -56,10 +56,14 @@ public class Main extends Application {
 				String busPlateNo = msg[3]; // 12<sk 7888
 				String busNumber = msg[4];
 				String selStationName = msg[5];
+
+				String userType = msg[6];
+
 				tf_req_bus_plate.setText(busPlateNo);
 				tf_req_stat_seq.setText(busSeq);
 				tf_req_bus_num.setText(busNumber);
 				tf_req_stat_name.setText(selStationName);
+
 				tf_run_bus_num.setText(busNumber);
 				if(selection.equals("geton")){
 					tf_req_function.setText("Get On");
@@ -101,7 +105,10 @@ public class Main extends Application {
 									// System.out.println("geton_Send to Raspberry On1 : " + busPlateNo);
 									str_log += (busPlateNo + " has arrived the station #"+stationSeqList.item(i).getTextContent()+"\n");
 									str_log += ("Send \"Get On\" message to the raspberry pi device." + "\n");
-									String res_msg = "geton&" + busPlateNo + "&" + selStationName; 
+									String res_msg = "geton&" + busPlateNo + "&" + selStationName;
+
+									res_msg +=  "&" + userType;
+
 									client.publish("bus_responses",res_msg.getBytes(),1,false);
 									// System.out.println("Blocked");
 									goRas_geton = true;
@@ -117,6 +124,9 @@ public class Main extends Application {
 								if(goRas_getend == false) {
 									System.out.println("geton_Send to Raspberry On2 : " + busPlateNo);
 									String res_msg = "geton_end&" + busPlateNo + "&" + selStationName;
+
+									res_msg +=  "&" + userType;
+
 									client.publish("bus_responses",res_msg.getBytes(),1,false);
 									waitArrived = false;
 									goRas_getend = true;
@@ -146,7 +156,10 @@ public class Main extends Application {
 									str_log += (busPlateNo + " has arrived the station #"+stationSeqList.item(i).getTextContent()+"\n");
 									str_log += ("Send \"Get On\" message to the raspberry pi device." + "\n");
 									// System.out.println("getoff_Send to Raspberry On1 : " + busPlateNo);
-									String res_msg = "getoff&" + busPlateNo + "&" + selStationName; 
+									String res_msg = "getoff&" + busPlateNo + "&" + selStationName;
+
+									res_msg +=  "&" + userType;
+
 									client.publish("bus_responses",res_msg.getBytes(),1,false);
 									// System.out.println("Blocked");
 									goRas_getoff = true;
@@ -161,7 +174,10 @@ public class Main extends Application {
 							if((Integer.parseInt(stationSeqList.item(i).getTextContent()) >= Integer.parseInt(busSeq)) && (plateNoList.item(i).getTextContent().equals(busPlateNo))) {
 								if(goRas_getoffend == false) {
 									System.out.println("getoff_Send to Raspberry On2 : " + busPlateNo);
-									String res_msg = "getoff_end&" + busPlateNo + "&" + selStationName; 
+									String res_msg = "getoff_end&" + busPlateNo + "&" + selStationName;
+
+									res_msg +=  "&" + userType;
+
 									client.publish("bus_responses",res_msg.getBytes(),1,false);
 									waitArrived = false;
 									goRas_getoffend = true;

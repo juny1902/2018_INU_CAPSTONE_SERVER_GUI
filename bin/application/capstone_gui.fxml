@@ -25,6 +25,8 @@
                         <TextField fx:id="tf_req_bus_plate" editable="true" layoutX="203.0" layoutY="147.0" prefHeight="26.0" prefWidth="105.0" />
                         <TextField fx:id="tf_req_stat_name" editable="true" layoutX="204.0" layoutY="235.0" prefHeight="26.0" prefWidth="105.0" />
                         <TextField fx:id="tf_req_stat_seq" editable="true" layoutX="203.0" layoutY="318.0" prefHeight="26.0" prefWidth="105.0" />
+
+
                      </children>
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="433.0" prefWidth="308.0">
