@@ -56,7 +56,6 @@ public class Main extends Application {
 				String busPlateNo = msg[3]; // 12<sk 7888
 				String busNumber = msg[4];
 				String selStationName = msg[5];
-
 				String userType = msg[6];
 
 				tf_req_bus_plate.setText(busPlateNo);
@@ -94,8 +93,8 @@ public class Main extends Application {
 						NodeList stationSeqList = (NodeList) xpath.evaluate("//busLocationList/stationSeq", document,
 								XPathConstants.NODESET);
 
-						System.out.println("geton_plate length: "+plateNoList.getLength());
-						System.out.println("geton_station length: "+stationSeqList.getLength());
+						//System.out.println("geton_plate length: "+plateNoList.getLength());
+						//System.out.println("geton_station length: "+stationSeqList.getLength());
 						String str_log = "";
 						for (int i = 0; i < plateNoList.getLength(); i++) {
 							str_log += (plateNoList.item(i).getTextContent() + "..." + stationSeqList.item(i).getTextContent() + "\n");
@@ -119,10 +118,9 @@ public class Main extends Application {
 						ta_running_log.setText(str_log);
 						
 						for (int i = 0; i < plateNoList.getLength(); i++) {
-							System.out.println("2nd for");
 							if((Integer.parseInt(stationSeqList.item(i).getTextContent()) >= Integer.parseInt(busSeq)) && (plateNoList.item(i).getTextContent().equals(busPlateNo))) {
 								if(goRas_getend == false) {
-									System.out.println("geton_Send to Raspberry On2 : " + busPlateNo);
+									//System.out.println("geton_Send to Raspberry On2 : " + busPlateNo);
 									String res_msg = "geton_end&" + busPlateNo + "&" + selStationName;
 
 									res_msg +=  "&" + userType;
@@ -135,7 +133,7 @@ public class Main extends Application {
 						}
 						Thread.sleep(10000);
 					}
-					System.out.println("geton_While escaped");
+					//System.out.println("geton_While escaped");
 				} else if(selection.equals("getoff")) {
 					while (waitArrived) {
 						org.w3c.dom.Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
@@ -170,10 +168,9 @@ public class Main extends Application {
 						ta_running_log.setText(str_log);
 						
 						for (int i = 0; i < plateNoList.getLength(); i++) {
-							System.out.println("2nd for");
 							if((Integer.parseInt(stationSeqList.item(i).getTextContent()) >= Integer.parseInt(busSeq)) && (plateNoList.item(i).getTextContent().equals(busPlateNo))) {
 								if(goRas_getoffend == false) {
-									System.out.println("getoff_Send to Raspberry On2 : " + busPlateNo);
+									//System.out.println("getoff_Send to Raspberry On2 : " + busPlateNo);
 									String res_msg = "getoff_end&" + busPlateNo + "&" + selStationName;
 
 									res_msg +=  "&" + userType;
@@ -188,7 +185,7 @@ public class Main extends Application {
 
 						Thread.sleep(10000);
 					}
-					System.out.println("getoff_While escaped");
+					//System.out.println("getoff_While escaped");
 				}
 				
 			}
